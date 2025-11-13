@@ -18,6 +18,7 @@
     <div class="header-links">
       <a href="index.php">Inicio</a>
       <a href="categorias.php">Categorias</a>
+      <a href="nosotros.php">Nosotros</a>
       <a href="login.php">Login</a>
     </div>
   </header>
@@ -115,6 +116,5 @@
     <p>2025 LA VACA</p>
   </footer>
 
-<script src="js/accesibilidad.js"></script>
 </body>
 </html>

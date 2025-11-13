@@ -12,14 +12,15 @@
 
 <body>
 
-    <header>
-        <div class="brand">LA VACA</div>
-        <div class="header-links">
-            <a href="index.php">Inicio</a>
-            <a href="categorias.php">Categorias</a>
-            <a href="login.php">Login</a>
-        </div>
-    </header>
+  <header>
+    <div class="brand">LA VACA</div>
+    <div class="header-links">
+      <a href="index.php">Inicio</a>
+      <a href="categorias.php">Categorias</a>
+      <a href="nosotros.php">Nosotros</a>
+      <a href="login.php">Login</a>
+    </div>
+  </header>
 
     <section class="heroc">
         <img src="img/imagen2.png" alt="New Collection 2025">
