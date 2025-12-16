@@ -150,7 +150,7 @@ INSERT INTO productos (nombre, descripcion, precio, id_categoria, stock, imagen)
 -- BOLSAS (categoria 3)
 ('Bolso marrón', 'Bolso de cuero', 95.00, 3, 18, 'img/bolsos.jpeg'),
 ('Bolso beige', 'Bolso elegante', 105.00, 3, 12, 'img/bolsos1.jpeg'),
-('Bolso borgoña', 'Bolso deportivo', 85.00, 3, 20, 'img/bolsos2.jpeg'),
+('Bolso borgoña', 'Bolso deportivo', 85.00, 3, 20, 'img/bolso2.jpeg'),
 -- ACCESORIOS (categoria 4)
 ('Aretes dorados', 'Aretes de lujo', 45.00, 4, 30, 'img/accesorios.jpeg'),
 ('Gafas de sol', 'Gafas protectoras', 95.00, 4, 25, 'img/accesorios1.jpeg'),
