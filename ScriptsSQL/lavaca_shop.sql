@@ -133,15 +133,33 @@ INSERT INTO categorias (nombre, descripcion) VALUES
 
 -- Insertar productos
 INSERT INTO productos (nombre, descripcion, precio, id_categoria, stock, imagen) VALUES
-('Leather Belt', 'Cinturón de cuero genuino', 95.00, 4, 50, 'img/imagen.png'),
-('Smartphone Case', 'Funda protectora', 55.00, 4, 100, 'img/imagen1.png'),
-('Leather Gloves', 'Guantes de cuero', 120.00, 4, 30, 'img/imagen2.png'),
-('Black Duffel', 'Bolsa deportiva', 420.00, 3, 20, 'img/imagen3.png'),
-('Chaqueta de cuero napa', 'Chaqueta de cuero', 20.00, 1, 15, 'img/imagen.png'),
-('Cardigan roja', 'Cardigan de lana', 30.00, 1, 40, 'img/imagen1.png'),
-('Velcro black pants', 'Pantalones negros', 25.00, 1, 60, 'img/imagen2.png'),
-('Pantalon de lana', 'Pantalón cómodo', 15.00, 1, 80, 'img/imagen3.png'),
-('Cotton T-shirt', 'Camiseta de algodón', 44.00, 1, 100, 'img/shirt.png');
+-- ROPA (categoria 1)
+('Chaqueta marrón', 'Chaqueta de cuero', 89.00, 1, 15, 'img/imagen.png'),
+('Chaqueta roja', 'Chaqueta deportiva', 75.00, 1, 20, 'img/imagen1.png'),
+('Abrigo negro', 'Abrigo elegante', 120.00, 1, 10, 'img/imagen2.png'),
+('Pantalones azules', 'Pantalones cómodos', 65.00, 1, 25, 'img/imagen3.png'),
+('Pantalones grises', 'Pantalones casuales', 55.00, 1, 30, 'img/imagen4.jpeg'),
+('Pantalones negros', 'Pantalones formales', 70.00, 1, 20, 'img/imagen5.jpeg'),
+('Traje completo', 'Traje de hombre', 250.00, 1, 5, 'img/imagen6.jpeg'),
+('Conjunto formal', 'Conjunto formal', 180.00, 1, 8, 'img/imagen7.jpeg'),
+('Outfit casual', 'Conjunto casual', 95.00, 1, 15, 'img/imagen8.jpeg'),
+-- ZAPATOS (categoria 2)
+('Zapatos rojos', 'Zapatos elegantes', 120.00, 2, 12, 'img/zapatos.jpeg'),
+('Zapatos blancos', 'Zapatos deportivos', 85.00, 2, 25, 'img/zapatos1.jpeg'),
+('Zapatos negros', 'Zapatos formales', 110.00, 2, 15, 'img/zapatos2.jpeg'),
+-- BOLSAS (categoria 3)
+('Bolso marrón', 'Bolso de cuero', 95.00, 3, 18, 'img/bolsos.jpeg'),
+('Bolso beige', 'Bolso elegante', 105.00, 3, 12, 'img/bolsos1.jpeg'),
+('Bolso borgoña', 'Bolso deportivo', 85.00, 3, 20, 'img/bolsos2.jpeg'),
+-- ACCESORIOS (categoria 4)
+('Aretes dorados', 'Aretes de lujo', 45.00, 4, 30, 'img/accesorios.jpeg'),
+('Gafas de sol', 'Gafas protectoras', 95.00, 4, 25, 'img/accesorios1.jpeg'),
+('Cinturón dorado', 'Cinturón elegante', 65.00, 4, 35, 'img/accesorios2.jpeg'),
+('Collar de perlas', 'Collar clásico', 150.00, 4, 15, 'img/accesorios3.jpeg'),
+('Reloj de oro', 'Reloj lujoso', 450.00, 4, 8, 'img/accesorios4.jpeg'),
+('Guantes de cuero', 'Guantes premium', 120.00, 4, 20, 'img/accesorios5.jpeg');
+
+
 
 -- Insertar códigos de descuento
 INSERT INTO codigos_descuento (codigo, descuento, fecha_expiracion) VALUES
