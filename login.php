@@ -1,97 +1,179 @@
 <?php
 session_start();
 
-if ($_SERVER['REQUEST_METHOD'] == 'POST') { // se encarga de pensar si se envio el formulario y si es asi
-  $email = $_POST['email'];
-  $remember = isset($_POST['remember']) ? true : false;
-
-
-  if (empty($email)) { // se valida que el email no este vacio 
-    $error = "El email es requerido";
-  } else { //aqui va la logica de autenticacion verdadera
-    $_SESSION['email'] = $email; //guarda la sesion en este caso con la base de datos
-    $_SESSION['logged_in'] = true;
-
-    header("Location: index.php"); // ya esto nos redirigiria a la inicio(index)
+if (isset($_SESSION['usuario_id'])) {
+    header('Location: index.php');
     exit();
-  }
+}
+
+$error = '';
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    require_once 'dao/UsuarioDaoImpl.php';
+    
+    $email = trim($_POST['email']);
+    $password = trim($_POST['password']);
+    
+    if (empty($email) || empty($password)) {
+        $error = 'Por favor complete todos los campos';
+    } else {
+        $usuarioDao = new UsuarioDaoImpl();
+        $usuario = $usuarioDao->validarLogin($email, $password);
+        
+        if ($usuario) {
+            // Login exitoso
+            $_SESSION['usuario_id'] = $usuario->id_usuario;
+            $_SESSION['usuario_nombre'] = $usuario->nombre;
+            $_SESSION['usuario_email'] = $usuario->email;
+            $_SESSION['usuario_rol'] = $usuario->rol;
+            
+            header('Location: index.php');
+            exit();
+        } else {
+            $error = 'Email o contraseña incorrectos';
+        }
+    }
 }
 ?>
 <!DOCTYPE html>
 <html lang="es">
-
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>LA VACA</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/styles.css">
-
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LA VACA | Login</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: "Poppins", sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .login-container {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+            overflow: hidden;
+            max-width: 900px;
+            width: 100%;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+        }
+        
+        .login-image {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 40px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: white;
+        }
+        
+        .login-image h2 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+        }
+        
+        .login-form {
+            padding: 60px 40px;
+        }
+        
+        .login-form h3 {
+            margin-bottom: 30px;
+            font-weight: 600;
+        }
+        
+        .form-control {
+            padding: 12px 15px;
+            border-radius: 10px;
+            border: 1px solid #e0e0e0;
+            margin-bottom: 20px;
+        }
+        
+        .form-control:focus {
+            border-color: #667eea;
+            box-shadow: 0 0 0 0.2rem rgba(102, 126, 234, 0.25);
+        }
+        
+        .btn-login {
+            width: 100%;
+            padding: 12px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border: none;
+            border-radius: 10px;
+            color: white;
+            font-weight: 600;
+            transition: transform 0.3s;
+        }
+        
+        .btn-login:hover {
+            transform: translateY(-2px);
+        }
+        
+        .alert {
+            border-radius: 10px;
+        }
+        
+        @media (max-width: 768px) {
+            .login-container {
+                grid-template-columns: 1fr;
+            }
+            .login-image {
+                display: none;
+            }
+        }
+    </style>
 </head>
-
-<body class="pagina-login">
-  <!-- es un header que es donde esta arriba de la pagina(tipo para selecionar el innicio etc) -->
-  <header>
-    <div class="brand">LA VACA</div>
-    <div class="header-links">
-     <a href="index.php">Inicio</a>
-      <a href="categorias.php">Categorias</a>
-      <a href="nosotros.php">Nosotros</a>
-      <a href="login.php">Login</a>
+<body>
+    <div class="login-container">
+        <div class="login-image">
+            <h2>LA VACA</h2>
+            <p>Tu tienda de moda online</p>
+            <p style="margin-top: 30px;">¿No tienes cuenta?</p>
+            <a href="registro.php" class="btn btn-light mt-3">Regístrate Aquí</a>
+        </div>
+        
+        <div class="login-form">
+            <h3>Iniciar Sesión</h3>
+            
+            <?php if ($error): ?>
+                <div class="alert alert-danger"><?php echo $error; ?></div>
+            <?php endif; ?>
+            
+            <form method="POST" action="">
+                <div class="mb-3">
+                    <label class="form-label">Email</label>
+                    <input type="email" name="email" class="form-control" 
+                           placeholder="tu@email.com" required>
+                </div>
+                
+                <div class="mb-3">
+                    <label class="form-label">Contraseña</label>
+                    <input type="password" name="password" class="form-control" 
+                           placeholder="Tu contraseña" required>
+                </div>
+                
+                <button type="submit" class="btn-login">Iniciar Sesión</button>
+                
+                <div class="text-center mt-4">
+                    <a href="index.php" style="color: #667eea; text-decoration: none;">
+                        ← Volver a la tienda
+                    </a>
+                </div>
+            </form>
+            
+            <div class="mt-4 p-3 bg-light rounded">
+                <small><strong>Usuario de prueba:</strong></small><br>
+                <small>Email: eduard@gmail.com</small><br>
+                <small>Password: pass123</small>
+            </div>
+        </div>
     </div>
-  </header>
-
-  <div class="login-container">
-    <div class="login-box">
-      <h1 class="login-title">LOGIN</h1>
-
-      <?php if (isset($error)): ?>
-        <div class="error-message" id="errorMsg"><?php echo $error; ?></div>
-      <?php endif; ?>
-
-      <div class="required-text">*CAMPOS REQUERIDOS</div>
-
-      <!--este es el form en donde se pone el email,contra y el clic a SIGUIENTE -->
-      <form method="POST" action="login.php" id="loginForm">
-        <div class="mb-4">
-          <label for="email" class="form-label">Email *</label>
-          <input type="email" class="form-control" id="email" name="email" required>
-        </div>
-
-        <div class="form-check"><!-- este es el check al darle recordarme -->
-          <input class="form-check-input" type="checkbox" id="remember" name="remember">
-          <label class="form-check-label" for="remember">
-            RECORDARME
-          </label>
-        </div>
-
-        <div class="login-links">
-          <a href="#" onclick="mostrarMensaje('recuperar')">¿OLVIDASTE TU CONTRASEÑA?</a> <!-- este es el link de recuperar contraseña (el mostrar mensaje esta en el script de abajo) -->
-        </div>
-
-        <button type="submit" class="btn-login">SIGUIENTE</button>
-      </form>
-
-      <!-- esta parte ya es para CREAR CUENTA -->
-      <div class="create-account">
-        <h3>CREAR UNA CUENTA</h3>
-        <p>DISFRUTA DE UNA EXPERIENCIA DE COMPRA MAS RAPIDA Y GESTIONA TU INFORMACIÓN PERSONAL EN TU CUENTA </p>
-        <button class="btn-create" onclick="window.location.href='registro.php'">CREAR UNA CUENTA</button>
-      </div>
-    </div>
-  </div>
-
-
-  <!--footer o sea lo de abajo -->
-  <footer>
-    <p>2025 LA VACA</p>
-  </footer>
-
-
-  <!--AQUI ESTA EL JAVASCRIPT o JS -->
-  <script src="js/login.js"></script>
-
 </body>
-
 </html>
